@@ -133,8 +133,6 @@ namespace search_nip_change_time_recruitment_task
             // 
             // sqlDatabaseTextbox
             // 
-            this.sqlDatabaseTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.sqlDatabaseTextbox.Location = new System.Drawing.Point(248, 93);
             this.sqlDatabaseTextbox.Name = "sqlDatabaseTextbox";
             this.sqlDatabaseTextbox.Size = new System.Drawing.Size(508, 31);
@@ -143,7 +141,6 @@ namespace search_nip_change_time_recruitment_task
             // 
             // sqlStateConnLabel
             // 
-            this.sqlStateConnLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sqlStateConnLabel.AutoSize = true;
             this.sqlStateConnLabel.Location = new System.Drawing.Point(784, 43);
             this.sqlStateConnLabel.Name = "sqlStateConnLabel";
@@ -163,7 +160,6 @@ namespace search_nip_change_time_recruitment_task
             // 
             // sqlConnectTestBtn
             // 
-            this.sqlConnectTestBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sqlConnectTestBtn.Location = new System.Drawing.Point(784, 187);
             this.sqlConnectTestBtn.Name = "sqlConnectTestBtn";
             this.sqlConnectTestBtn.Size = new System.Drawing.Size(183, 43);
@@ -174,8 +170,6 @@ namespace search_nip_change_time_recruitment_task
             // 
             // sqlServerTextbox
             // 
-            this.sqlServerTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.sqlServerTextbox.Location = new System.Drawing.Point(248, 43);
             this.sqlServerTextbox.Name = "sqlServerTextbox";
             this.sqlServerTextbox.Size = new System.Drawing.Size(508, 31);
@@ -184,8 +178,6 @@ namespace search_nip_change_time_recruitment_task
             // 
             // sqlUserPassTextbox
             // 
-            this.sqlUserPassTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.sqlUserPassTextbox.Location = new System.Drawing.Point(248, 193);
             this.sqlUserPassTextbox.Name = "sqlUserPassTextbox";
             this.sqlUserPassTextbox.PasswordChar = '*';
@@ -204,8 +196,6 @@ namespace search_nip_change_time_recruitment_task
             // 
             // sqlUserLoginTextbox
             // 
-            this.sqlUserLoginTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.sqlUserLoginTextbox.Location = new System.Drawing.Point(248, 143);
             this.sqlUserLoginTextbox.Name = "sqlUserLoginTextbox";
             this.sqlUserLoginTextbox.Size = new System.Drawing.Size(508, 31);
