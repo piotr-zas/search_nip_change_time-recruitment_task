@@ -39,7 +39,7 @@ namespace search_nip_change_time_recruitment_task
 
 
 
-        private List<DataTable> GetDataFromSql(SetOfNeccessaryTables allTablesInfo)
+        private List<DataTable> GetDataFromSql(SetOfNeccessaryTables allTablesInfo, string requestID)
         {
             List<DataTable> tableFromSql = new List<DataTable>();
 
@@ -48,19 +48,87 @@ namespace search_nip_change_time_recruitment_task
                 using (MySqlConnection conncection = new MySqlConnection(GetSqlConnectionString()))
                 {
                     conncection.Open();
-                    string commandString = $"SELECT * FROM {allTablesInfo.EntityItemSqlTable.TableName};";
+
+                    //EntityItemSqlTable
+                    string commandString = $"SELECT ";
+                    commandString += $"{allTablesInfo.EntityItemSqlTable.TableName}.*";
+                    commandString += $" FROM {allTablesInfo.EntityItemSqlTable.TableName}";
+                    commandString += $" WHERE {allTablesInfo.EntityItemSqlTable.TableName}.requestID='{requestID}'";
+                    commandString += ";";
                     GetTableSqlByCommand(commandString, conncection, tableFromSql);
 
-                    commandString = $"SELECT * FROM {allTablesInfo.EntitySqlTable.TableName};";
+
+
+
+                    //EntitySqlTable
+                    commandString = "SELECT ";
+                    commandString += $"{allTablesInfo.EntitySqlTable.TableName}.*";
+                   
+                    commandString += $" FROM {allTablesInfo.EntityItemSqlTable.TableName}";
+
+                    commandString += $" LEFT JOIN {allTablesInfo.EntitySqlTable.TableName}";
+                    commandString += $" ON {allTablesInfo.EntityItemSqlTable.TableName}.ID={allTablesInfo.EntitySqlTable.TableName}.EntityItemID";
+
+                    commandString += $" WHERE {allTablesInfo.EntityItemSqlTable.TableName}.requestID='{requestID}'";
+                    commandString += ";";
+
                     GetTableSqlByCommand(commandString, conncection, tableFromSql);
 
-                    commandString = $"SELECT * FROM {allTablesInfo.AuthorizedClerksSqlTable.TableName};";
+
+
+                    //AuthorizedClerksSqlTable
+                    commandString = "SELECT ";
+                    commandString += $"{allTablesInfo.AuthorizedClerksSqlTable.TableName}.*";
+                    commandString += $" FROM {allTablesInfo.EntityItemSqlTable.TableName}";
+
+                    commandString += $" LEFT JOIN {allTablesInfo.EntitySqlTable.TableName}";
+                    commandString += $" ON {allTablesInfo.EntityItemSqlTable.TableName}.ID={allTablesInfo.EntitySqlTable.TableName}.EntityItemID";
+
+                    commandString += $" LEFT JOIN {allTablesInfo.AuthorizedClerksSqlTable.TableName}";
+                    commandString += $" ON {allTablesInfo.EntitySqlTable.TableName}.ID={allTablesInfo.AuthorizedClerksSqlTable.TableName}.EntityID";
+
+                    commandString += $" WHERE {allTablesInfo.EntityItemSqlTable.TableName}.requestID='{requestID}'";
+                    commandString += ";";
+                    
                     GetTableSqlByCommand(commandString, conncection, tableFromSql);
 
-                    commandString = $"SELECT * FROM {allTablesInfo.PartnersSqlTable.TableName};";
+
+
+
+
+                    //PartnersSqlTable
+                    commandString = "SELECT ";
+                    commandString += $"{allTablesInfo.PartnersSqlTable.TableName}.*";
+                    commandString += $" FROM {allTablesInfo.EntityItemSqlTable.TableName}";
+
+                    commandString += $" LEFT JOIN {allTablesInfo.EntitySqlTable.TableName}";
+                    commandString += $" ON {allTablesInfo.EntityItemSqlTable.TableName}.ID={allTablesInfo.EntitySqlTable.TableName}.EntityItemID";
+
+                    commandString += $" LEFT JOIN {allTablesInfo.PartnersSqlTable.TableName}";
+                    commandString += $" ON {allTablesInfo.EntitySqlTable.TableName}.ID={allTablesInfo.PartnersSqlTable.TableName}.EntityID";
+
+                    commandString += $" WHERE {allTablesInfo.EntityItemSqlTable.TableName}.requestID='{requestID}'";
+                    commandString += ";";
+
                     GetTableSqlByCommand(commandString, conncection, tableFromSql);
 
-                    commandString = $"SELECT * FROM {allTablesInfo.RepresentativesSqlTable.TableName};";
+
+
+
+                    //RepresentativesSqlTable
+                    commandString = "SELECT ";
+                    commandString += $"{allTablesInfo.RepresentativesSqlTable.TableName}.*";
+                    commandString += $" FROM {allTablesInfo.EntityItemSqlTable.TableName}";
+
+                    commandString += $" LEFT JOIN {allTablesInfo.EntitySqlTable.TableName}";
+                    commandString += $" ON {allTablesInfo.EntityItemSqlTable.TableName}.ID={allTablesInfo.EntitySqlTable.TableName}.EntityItemID";
+
+                    commandString += $" LEFT JOIN {allTablesInfo.RepresentativesSqlTable.TableName}";
+                    commandString += $" ON {allTablesInfo.EntitySqlTable.TableName}.ID={allTablesInfo.RepresentativesSqlTable.TableName}.EntityID";
+
+                    commandString += $" WHERE {allTablesInfo.EntityItemSqlTable.TableName}.requestID='{requestID}'";
+                    commandString += ";";
+
                     GetTableSqlByCommand(commandString, conncection, tableFromSql);
 
 

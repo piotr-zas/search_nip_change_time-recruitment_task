@@ -264,6 +264,8 @@ namespace search_nip_change_time_recruitment_task
 
         private void searchDataByNipBgw_DoWork(object sender, DoWorkEventArgs e)
         {
+            int countOfStages = 5;
+
             string typedNip = "";
             this.Invoke(new Action(() => {
                 typedNip = employerNIPTextbox.Text;
@@ -286,12 +288,15 @@ namespace search_nip_change_time_recruitment_task
                 }));
             }
 
-            
-                (EntityResponse employerData, HttpResponseMessage response) = GetDataFromNIP(typedNip);
-          
+
+
+
+            //get data from gov
+            (EntityResponse employerData, HttpResponseMessage response) = GetDataFromNIP(typedNip);
+
             //check not found nip or response error
             if (CheckAndMessageErrorResponse(employerData, response)) return;
-
+            searchDataByNipBgw.ReportProgress((int)(1.00 / countOfStages * 100.00));
 
 
 
@@ -305,20 +310,49 @@ namespace search_nip_change_time_recruitment_task
             if (CreateNecessaryTablesInSql(allTables.AuthorizedClerksSqlTable)) return;
             if (CreateNecessaryTablesInSql(allTables.RepresentativesSqlTable)) return;
 
-            
+            searchDataByNipBgw.ReportProgress((int)(2.00 / countOfStages * 100.00));
+
+
+
+            //send data to SQL
             if (SendAllDataToSql(employerData, allTables)) return;
 
-            List<DataTable> tablesFromMySql = GetDataFromSql(allTables);
+            searchDataByNipBgw.ReportProgress((int)(3.00 / countOfStages * 100.00));
 
+
+
+            //get data from SQL
+            List<DataTable> tablesFromMySql = GetDataFromSql(allTables,employerData.result.requestId);
+
+          
             if (tablesFromMySql == null) return;
+            searchDataByNipBgw.ReportProgress((int)(4.00 / countOfStages * 100.00));
+
+
             HtmlFileWithData fileHtml = new HtmlFileWithData("index.html", tablesFromMySql);
+
+
+
+
+            try
+            {
+                File.WriteAllText(fileHtml.PathOfFile, fileHtml.HtmlCode);
+                searchDataByNipBgw.ReportProgress((int)(5.00 / countOfStages * 100.00));
+            }catch (Exception error)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    MessageBox.Show(error.Message, "Błąd!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }));
+                return;
+            }
 
 
             this.Invoke(new Action(() =>
             {
                 MessageBox.Show("Gotowe!");
             }));
-            File.WriteAllText(fileHtml.PathOfFile, fileHtml.HtmlCode);
+           
             if (File.Exists(fileHtml.PathOfFile)) Process.Start(fileHtml.PathOfFile);
 
 

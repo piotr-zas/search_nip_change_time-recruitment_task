@@ -39,7 +39,6 @@ namespace search_nip_change_time_recruitment_task
             htmlCodeSB.Append("</head>\r\n");
             htmlCodeSB.Append("<body>\r\n");
             htmlCodeSB.Append("<center>\r\n");
-            htmlCodeSB.Append("<p><h1>Dane przedsiębiorców</h1><br></p>\r\n");
             htmlCodeSB.Append(PrepareDataTableToHtmlTable(tablesFromSql) + "\r\n");
             htmlCodeSB.Append("</center>\r\n");
             htmlCodeSB.Append("</body>\r\n");
@@ -52,9 +51,41 @@ namespace search_nip_change_time_recruitment_task
         private string PrepareDataTableToHtmlTable(List<DataTable> dataTables)
         {
             StringBuilder htmlCode = new StringBuilder();
-
+            int iter = 1;
             foreach (DataTable dataTable in dataTables)
             {
+                switch (iter)
+                {
+                    case 1:
+                        {
+                            htmlCode.Append("<br><h2>EntityItem:</h2>\r\n");
+                            break;
+                        }
+                    case 2:
+                        {
+                            htmlCode.Append("<br><h2>Entity:</h2>\r\n");
+                            break;
+                        }
+                    case 3:
+                        {
+                            htmlCode.Append("<br><h2>AuthorizedClerks:</h2>\r\n");
+                            break;
+                        }
+                    case 4:
+                        {
+                            htmlCode.Append("<br><h2>Parnters:</h2>\r\n");
+                            break;
+                        }
+                    case 5:
+                        {
+                            htmlCode.Append("<br><h2>Representatives:</h2>\r\n");
+                            break;
+                        }
+                }
+                ++iter;
+
+
+
                 htmlCode.Append("<table style='font-size:80%' border=\"1\">\r\n");
 
                 htmlCode.Append("\t<tr>\r\n");
