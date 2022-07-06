@@ -46,10 +46,16 @@ namespace search_nip_change_time_recruitment_task
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.startSrtChangeTimeBtn = new System.Windows.Forms.Button();
+            this.selectSrtFileBtn = new System.Windows.Forms.Button();
+            this.srtFilePathTextBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.testConnectionBgw = new System.ComponentModel.BackgroundWorker();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.mainTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.sqlSettingsGroupBox.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainTabControl
@@ -222,6 +228,10 @@ namespace search_nip_change_time_recruitment_task
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.startSrtChangeTimeBtn);
+            this.tabPage2.Controls.Add(this.selectSrtFileBtn);
+            this.tabPage2.Controls.Add(this.srtFilePathTextBox);
+            this.tabPage2.Controls.Add(this.label5);
             this.tabPage2.Location = new System.Drawing.Point(8, 39);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -230,10 +240,57 @@ namespace search_nip_change_time_recruitment_task
             this.tabPage2.Text = "Zmiana czasu wyświetlania napisów";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // startSrtChangeTimeBtn
+            // 
+            this.startSrtChangeTimeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.startSrtChangeTimeBtn.Enabled = false;
+            this.startSrtChangeTimeBtn.Location = new System.Drawing.Point(1184, 150);
+            this.startSrtChangeTimeBtn.Name = "startSrtChangeTimeBtn";
+            this.startSrtChangeTimeBtn.Size = new System.Drawing.Size(311, 45);
+            this.startSrtChangeTimeBtn.TabIndex = 3;
+            this.startSrtChangeTimeBtn.Text = "Zmień czas i podziel plik";
+            this.startSrtChangeTimeBtn.UseVisualStyleBackColor = true;
+            this.startSrtChangeTimeBtn.Click += new System.EventHandler(this.startSrtChangeTimeBtn_Click);
+            // 
+            // selectSrtFileBtn
+            // 
+            this.selectSrtFileBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.selectSrtFileBtn.Location = new System.Drawing.Point(1334, 32);
+            this.selectSrtFileBtn.Name = "selectSrtFileBtn";
+            this.selectSrtFileBtn.Size = new System.Drawing.Size(161, 45);
+            this.selectSrtFileBtn.TabIndex = 2;
+            this.selectSrtFileBtn.Text = "Wybierz...";
+            this.selectSrtFileBtn.UseVisualStyleBackColor = true;
+            this.selectSrtFileBtn.Click += new System.EventHandler(this.selectSrtFileBtn_Click);
+            // 
+            // srtFilePathTextBox
+            // 
+            this.srtFilePathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.srtFilePathTextBox.Location = new System.Drawing.Point(130, 39);
+            this.srtFilePathTextBox.Name = "srtFilePathTextBox";
+            this.srtFilePathTextBox.Size = new System.Drawing.Size(1198, 31);
+            this.srtFilePathTextBox.TabIndex = 1;
+            this.srtFilePathTextBox.TextChanged += new System.EventHandler(this.srtFilePath_TextChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(23, 42);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(101, 25);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Plik SRT:";
+            // 
             // testConnectionBgw
             // 
             this.testConnectionBgw.DoWork += new System.ComponentModel.DoWorkEventHandler(this.testConnectionBgw_DoWork);
             this.testConnectionBgw.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.testConnectionBgw_RunWorkerCompleted);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "SRT files|*.srt";
             // 
             // Form1
             // 
@@ -249,6 +306,8 @@ namespace search_nip_change_time_recruitment_task
             this.tabPage1.PerformLayout();
             this.sqlSettingsGroupBox.ResumeLayout(false);
             this.sqlSettingsGroupBox.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -273,6 +332,11 @@ namespace search_nip_change_time_recruitment_task
         private System.Windows.Forms.TextBox employerNIPTextbox;
         private System.ComponentModel.BackgroundWorker testConnectionBgw;
         private System.Windows.Forms.Button searchEmployerDataBtn;
+        private System.Windows.Forms.Button selectSrtFileBtn;
+        private System.Windows.Forms.TextBox srtFilePathTextBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button startSrtChangeTimeBtn;
     }
 }
 

@@ -118,6 +118,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlHtmlClasses.cs" />
+    <Compile Include="SqlHtmlMethods.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SrtFileClass.cs" />
+    <Compile Include="SrtFileMethods.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

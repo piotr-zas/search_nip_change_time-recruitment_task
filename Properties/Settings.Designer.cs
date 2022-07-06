@@ -70,5 +70,17 @@ namespace search_nip_change_time_recruitment_task.Properties {
                 this["sqlUserPassTextboxSetting"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string srtFilePathSetting {
+            get {
+                return ((string)(this["srtFilePathSetting"]));
+            }
+            set {
+                this["srtFilePathSetting"] = value;
+            }
+        }
     }
 }
