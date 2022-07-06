@@ -19,25 +19,28 @@ namespace search_nip_change_time_recruitment_task
     public class HtmlFileWithData
     {
         public string HtmlCode { get; set; }
-        public DataTable DataTableFromSql { get; set; }
+        public List<DataTable> DataTablesFromSql { get; set; }
         public string PathOfFile { get; set; }
-        public HtmlFileWithData(string path, DataTable tableFromSql)
+        public HtmlFileWithData(string path, List<DataTable> tablesFromSql)
         {
             PathOfFile = path;
-            DataTableFromSql = tableFromSql;
-
+            DataTablesFromSql = tablesFromSql;
+           
 
 
             StringBuilder htmlCodeSB = new StringBuilder();
             htmlCodeSB.Append("<!DOCTYPE html>\r\n");
             htmlCodeSB.Append("<html>\r\n");
             htmlCodeSB.Append("<head>\r\n");
+            htmlCodeSB.Append("<style>\r\n");
+            htmlCodeSB.Append("table th{position: -webkit-sticky; position: sticky;}\r\n");
+            htmlCodeSB.Append("</style>\r\n");
             htmlCodeSB.Append("<title>Dane przedsiębiorców</title>\r\n");
             htmlCodeSB.Append("</head>\r\n");
             htmlCodeSB.Append("<body>\r\n");
             htmlCodeSB.Append("<center>\r\n");
-            htmlCodeSB.Append("<p>Dane przedsiębiorców<br></p>\r\n");
-            htmlCodeSB.Append(PrepareDataTableToHtmlTable(tableFromSql) + "\r\n");
+            htmlCodeSB.Append("<p><h1>Dane przedsiębiorców</h1><br></p>\r\n");
+            htmlCodeSB.Append(PrepareDataTableToHtmlTable(tablesFromSql) + "\r\n");
             htmlCodeSB.Append("</center>\r\n");
             htmlCodeSB.Append("</body>\r\n");
             htmlCodeSB.Append("</html>\r\n");
@@ -46,32 +49,36 @@ namespace search_nip_change_time_recruitment_task
 
         }
 
-        private string PrepareDataTableToHtmlTable(DataTable dataTable)
+        private string PrepareDataTableToHtmlTable(List<DataTable> dataTables)
         {
             StringBuilder htmlCode = new StringBuilder();
-            htmlCode.Append("<table>\r\n");
 
-            htmlCode.Append("\t<tr>\r\n");
-            foreach (DataColumn column in dataTable.Columns)
+            foreach (DataTable dataTable in dataTables)
             {
-                htmlCode.Append($"\t\t<th>{column.ColumnName}</th>\r\n");
-            }
-            htmlCode.Append("\t</tr>\r\n");
+                htmlCode.Append("<table style='font-size:80%' border=\"1\">\r\n");
 
-
-            foreach (DataRow row in dataTable.Rows)
-            {
                 htmlCode.Append("\t<tr>\r\n");
                 foreach (DataColumn column in dataTable.Columns)
                 {
-
-                    htmlCode.Append($"\t\t<td>{row[column]}</td>\r\n");
+                    htmlCode.Append($"\t\t<th>{column.ColumnName}</th>\r\n");
                 }
                 htmlCode.Append("\t</tr>\r\n");
+
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    htmlCode.Append("\t<tr>\r\n");
+
+                    foreach (DataColumn column in dataTable.Columns)
+                    {
+
+                        htmlCode.Append($"\t\t<td>{row[column]}</td>\r\n");
+                    }
+                    htmlCode.Append("\t</tr>\r\n");
+                }
+
+                htmlCode.Append("</table>\r\n");
             }
-
-            htmlCode.Append("</table>\r\n");
-
 
             return htmlCode.ToString();
         }

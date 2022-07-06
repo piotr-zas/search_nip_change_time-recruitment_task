@@ -20,55 +20,61 @@ namespace search_nip_change_time_recruitment_task
    public partial class Form1
     {
 
-        private DataTable GetDataFromSql(SetOfNeccessaryTables allTablesInfo)
+
+        private void GetTableSqlByCommand(string commandString, MySqlConnection conncection, List<DataTable> tableFromSql)
         {
+            using (MySqlCommand command = new MySqlCommand(commandString, conncection))
+            {
+                using (MySqlDataAdapter mySqlAdapter = new MySqlDataAdapter(command))
+                {
+                    DataTable readedData = new DataTable();
+
+                    mySqlAdapter.Fill(readedData);
+                    tableFromSql.Add(readedData);
+
+                }
+            }
+
+        }
+
+
+
+        private List<DataTable> GetDataFromSql(SetOfNeccessaryTables allTablesInfo)
+        {
+            List<DataTable> tableFromSql = new List<DataTable>();
+
             try
             {
                 using (MySqlConnection conncection = new MySqlConnection(GetSqlConnectionString()))
                 {
                     conncection.Open();
-                    string commandString = "SELECT ";
+                    string commandString = $"SELECT * FROM {allTablesInfo.EntityItemSqlTable.TableName};";
+                    GetTableSqlByCommand(commandString, conncection, tableFromSql);
 
-                    commandString += $"{allTablesInfo.EntityItemSqlTable.TableName}.*,";
-                    commandString += $"{allTablesInfo.EntitySqlTable.TableName}.*,";
-                    commandString += $"{allTablesInfo.AuthorizedClerksSqlTable.TableName}.*,";
-                    commandString += $"{allTablesInfo.PartnersSqlTable.TableName}.*,";
-                    commandString += $"{allTablesInfo.RepresentativesSqlTable.TableName}.*";
+                    commandString = $"SELECT * FROM {allTablesInfo.EntitySqlTable.TableName};";
+                    GetTableSqlByCommand(commandString, conncection, tableFromSql);
 
-                    commandString += $" FROM {allTablesInfo.EntityItemSqlTable.TableName}";
+                    commandString = $"SELECT * FROM {allTablesInfo.AuthorizedClerksSqlTable.TableName};";
+                    GetTableSqlByCommand(commandString, conncection, tableFromSql);
 
-                    commandString += $" LEFT JOIN {allTablesInfo.EntitySqlTable.TableName}";
-                    commandString += $" ON {allTablesInfo.EntityItemSqlTable.TableName}.ID={allTablesInfo.EntitySqlTable.TableName}.EntityItemID";
+                    commandString = $"SELECT * FROM {allTablesInfo.PartnersSqlTable.TableName};";
+                    GetTableSqlByCommand(commandString, conncection, tableFromSql);
 
-                    commandString += $" LEFT JOIN {allTablesInfo.AuthorizedClerksSqlTable.TableName}";
-                    commandString += $" ON {allTablesInfo.EntitySqlTable.TableName}.ID={allTablesInfo.AuthorizedClerksSqlTable.TableName}.EntityID";
-
-                    commandString += $" LEFT JOIN {allTablesInfo.PartnersSqlTable.TableName}";
-                    commandString += $" ON {allTablesInfo.EntitySqlTable.TableName}.ID={allTablesInfo.PartnersSqlTable.TableName}.EntityID";
-
-                    commandString += $" LEFT JOIN {allTablesInfo.RepresentativesSqlTable.TableName}";
-                    commandString += $" ON {allTablesInfo.EntitySqlTable.TableName}.ID={allTablesInfo.RepresentativesSqlTable.TableName}.EntityID";
+                    commandString = $"SELECT * FROM {allTablesInfo.RepresentativesSqlTable.TableName};";
+                    GetTableSqlByCommand(commandString, conncection, tableFromSql);
 
 
-                    commandString += ";";
-
-                    using (MySqlCommand command = new MySqlCommand(commandString, conncection))
-                    {
-                        using (MySqlDataAdapter mySqlAdapter = new MySqlDataAdapter(command))
-                        {
-                            DataTable readedData = new DataTable();
-
-                            mySqlAdapter.Fill(readedData);
-                            return readedData;
-                        }
-                    }
 
 
+                    return tableFromSql;
                 }
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message, "Błąd!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Invoke(new Action(() =>
+                {
+                    MessageBox.Show(error.Message, "Błąd!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }));
                 return null;
             }
 
@@ -116,7 +122,10 @@ namespace search_nip_change_time_recruitment_task
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message, "Błąd!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Invoke(new Action(() =>
+                {
+                    MessageBox.Show(error.Message, "Błąd!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }));
                 return 0;
             }
 
@@ -209,7 +218,7 @@ namespace search_nip_change_time_recruitment_task
 
             long idParent = SendOneTableToSql(allTablesInfo.EntityItemSqlTable, valuesEntityItemSql.ToArray());
             if (idParent == 0) return true;//error
-
+         
 
 
 
@@ -240,7 +249,7 @@ namespace search_nip_change_time_recruitment_task
 
             idParent = SendOneTableToSql(allTablesInfo.EntitySqlTable, valuesEntitySql.ToArray());
             if (idParent == 0) return true;//error
-
+            
 
 
 
@@ -312,13 +321,19 @@ namespace search_nip_change_time_recruitment_task
         {
             if (!response.IsSuccessStatusCode)
             {
-                MessageBox.Show(response.StatusCode.ToString(), "Błąd!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Invoke(new Action(() =>
+                {
+                    MessageBox.Show(response.StatusCode.ToString(), "Błąd!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }));
                 return true;
             }
 
             if (employerData.result.subject == null)
             {
-                MessageBox.Show("Nie znaleziono takiego numeru NIP w bazie", "Błąd!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Invoke(new Action(() =>
+                {
+                    MessageBox.Show("Nie znaleziono takiego numeru NIP w bazie", "Błąd!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }));
                 return true;
             }
             return false;
@@ -354,7 +369,10 @@ namespace search_nip_change_time_recruitment_task
                 }
                 catch (Exception error)
                 {
-                    MessageBox.Show(error.Message, "Błąd!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Invoke(new Action(() =>
+                    {
+                        MessageBox.Show(error.Message, "Błąd!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }));
                     return true;
                 }
 

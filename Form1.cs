@@ -78,19 +78,20 @@ namespace search_nip_change_time_recruitment_task
 
 
 
+            this.Invoke(new Action(() =>
+            {
+                //server
+                connectionString += $"server={sqlServerTextbox.Text};";
 
-            //server
-            connectionString += $"server={sqlServerTextbox.Text};";
+                //user login
+                connectionString += $"user id={sqlUserLoginTextbox.Text};";
 
-            //user login
-            connectionString += $"user id={sqlUserLoginTextbox.Text};";
+                //user pass
+                connectionString += $"password={sqlUserPassTextbox.Text};";
 
-            //user pass
-            connectionString += $"password={sqlUserPassTextbox.Text};";
-
-            //database
-            connectionString += $"database={sqlDatabaseTextbox.Text};";
-
+                //database
+                connectionString += $"database={sqlDatabaseTextbox.Text};";
+            }));
 
             return connectionString;
         }
@@ -194,43 +195,7 @@ namespace search_nip_change_time_recruitment_task
 
         private void searchEmployerDataBtn_Click(object sender, EventArgs e)
         {
-
-            if (employerNIPTextbox.Text.Length != 10)
-            {
-                MessageBox.Show("Podano zbyt krótki NIP", "Błąd!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            (EntityResponse employerData, HttpResponseMessage response) = GetDataFromNIP(employerNIPTextbox.Text);
-            //check not found nip or response error
-            if (CheckAndMessageErrorResponse(employerData, response)) return;
-
-
-
-
-            SetOfNeccessaryTables allTables = new SetOfNeccessaryTables();
-
-
-            //create tables
-            if (CreateNecessaryTablesInSql(allTables.EntityItemSqlTable)) return;
-            if (CreateNecessaryTablesInSql(allTables.EntitySqlTable)) return;
-            if (CreateNecessaryTablesInSql(allTables.PartnersSqlTable)) return;
-            if (CreateNecessaryTablesInSql(allTables.AuthorizedClerksSqlTable)) return;
-            if (CreateNecessaryTablesInSql(allTables.RepresentativesSqlTable)) return;
-
-
-            if (SendAllDataToSql(employerData, allTables)) return;
-
-            DataTable tableFromMySql = GetDataFromSql(allTables);
-
-            if (tableFromMySql == null) return;
-            HtmlFileWithData fileHtml = new HtmlFileWithData("index.html", tableFromMySql);
-
-
-
-            MessageBox.Show("Gotowe!");
-            File.WriteAllText(fileHtml.PathOfFile, fileHtml.HtmlCode);
-            if (File.Exists(fileHtml.PathOfFile)) Process.Start(fileHtml.PathOfFile);
+            searchDataByNipBgw.RunWorkerAsync();
         }
 
 
@@ -264,9 +229,9 @@ namespace search_nip_change_time_recruitment_task
             List<SrtFileElements> srtFileElementListZeroMilliseconds = GetSrtDataListIfStartMillisecondsIsZero(srtFileElementsList);
 
 
-            string pathSubtitlesNoneZeroMill = Path.GetDirectoryName(srtFilePathTextBox.Text)+"\\"
+            string pathSubtitlesNoneZeroMill = Path.GetDirectoryName(srtFilePathTextBox.Text) + "\\"
                 + Path.GetFileNameWithoutExtension(srtFilePathTextBox.Text)
-                + "-non-zero-miliseconds" 
+                + "-non-zero-miliseconds"
                 + Path.GetExtension(srtFilePathTextBox.Text);
 
 
@@ -279,7 +244,9 @@ namespace search_nip_change_time_recruitment_task
             SaveListSrtElementsToFile(srtFileElementsList, pathSubtitlesNoneZeroMill);
 
             SaveListSrtElementsToFile(srtFileElementListZeroMilliseconds, pathSubtitlesZeroMill);
+
             MessageBox.Show("Gotowe!");
+
             Process.Start(Path.GetDirectoryName(srtFilePathTextBox.Text));
         }
 
@@ -293,6 +260,85 @@ namespace search_nip_change_time_recruitment_task
                 Properties.Settings.Default.Save();
             }
             else startSrtChangeTimeBtn.Enabled = false;
+        }
+
+        private void searchDataByNipBgw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            string typedNip = "";
+            this.Invoke(new Action(() => {
+                typedNip = employerNIPTextbox.Text;
+                SetGuiStatus(false);
+                progressBar1.Value = 0;
+                progressBar1.Visible = true;
+            }));
+
+
+
+
+
+
+            if (typedNip.Length != 10)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    MessageBox.Show("Podano zbyt krótki NIP", "Błąd!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }));
+            }
+
+            
+                (EntityResponse employerData, HttpResponseMessage response) = GetDataFromNIP(typedNip);
+          
+            //check not found nip or response error
+            if (CheckAndMessageErrorResponse(employerData, response)) return;
+
+
+
+
+            SetOfNeccessaryTables allTables = new SetOfNeccessaryTables();
+
+
+            //create tables
+            if (CreateNecessaryTablesInSql(allTables.EntityItemSqlTable)) return;
+            if (CreateNecessaryTablesInSql(allTables.EntitySqlTable)) return;
+            if (CreateNecessaryTablesInSql(allTables.PartnersSqlTable)) return;
+            if (CreateNecessaryTablesInSql(allTables.AuthorizedClerksSqlTable)) return;
+            if (CreateNecessaryTablesInSql(allTables.RepresentativesSqlTable)) return;
+
+            
+            if (SendAllDataToSql(employerData, allTables)) return;
+
+            List<DataTable> tablesFromMySql = GetDataFromSql(allTables);
+
+            if (tablesFromMySql == null) return;
+            HtmlFileWithData fileHtml = new HtmlFileWithData("index.html", tablesFromMySql);
+
+
+            this.Invoke(new Action(() =>
+            {
+                MessageBox.Show("Gotowe!");
+            }));
+            File.WriteAllText(fileHtml.PathOfFile, fileHtml.HtmlCode);
+            if (File.Exists(fileHtml.PathOfFile)) Process.Start(fileHtml.PathOfFile);
+
+
+        }
+
+        private void searchDataByNipBgw_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            this.Invoke(new Action(() => {
+                progressBar1.Value = e.ProgressPercentage;
+              
+            }));
+        }
+
+        private void searchDataByNipBgw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.Invoke(new Action(() => {
+
+                SetGuiStatus(true);
+                progressBar1.Visible = false;
+            }));
         }
     }
 

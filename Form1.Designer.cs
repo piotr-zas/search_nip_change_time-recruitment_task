@@ -52,6 +52,8 @@ namespace search_nip_change_time_recruitment_task
             this.label5 = new System.Windows.Forms.Label();
             this.testConnectionBgw = new System.ComponentModel.BackgroundWorker();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.searchDataByNipBgw = new System.ComponentModel.BackgroundWorker();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.mainTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.sqlSettingsGroupBox.SuspendLayout();
@@ -73,6 +75,7 @@ namespace search_nip_change_time_recruitment_task
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.progressBar1);
             this.tabPage1.Controls.Add(this.searchEmployerDataBtn);
             this.tabPage1.Controls.Add(this.employerNIPTextbox);
             this.tabPage1.Controls.Add(this.label6);
@@ -292,6 +295,21 @@ namespace search_nip_change_time_recruitment_task
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "SRT files|*.srt";
             // 
+            // searchDataByNipBgw
+            // 
+            this.searchDataByNipBgw.WorkerReportsProgress = true;
+            this.searchDataByNipBgw.DoWork += new System.ComponentModel.DoWorkEventHandler(this.searchDataByNipBgw_DoWork);
+            this.searchDataByNipBgw.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.searchDataByNipBgw_ProgressChanged);
+            this.searchDataByNipBgw.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.searchDataByNipBgw_RunWorkerCompleted);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(15, 762);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(1478, 23);
+            this.progressBar1.TabIndex = 13;
+            this.progressBar1.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -337,6 +355,8 @@ namespace search_nip_change_time_recruitment_task
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button startSrtChangeTimeBtn;
+        private System.ComponentModel.BackgroundWorker searchDataByNipBgw;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 
