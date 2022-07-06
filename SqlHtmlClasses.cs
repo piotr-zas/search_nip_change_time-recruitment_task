@@ -32,9 +32,6 @@ namespace search_nip_change_time_recruitment_task
             htmlCodeSB.Append("<!DOCTYPE html>\r\n");
             htmlCodeSB.Append("<html>\r\n");
             htmlCodeSB.Append("<head>\r\n");
-            htmlCodeSB.Append("<style>\r\n");
-            htmlCodeSB.Append("table th{position: -webkit-sticky; position: sticky;}\r\n");
-            htmlCodeSB.Append("</style>\r\n");
             htmlCodeSB.Append("<title>Dane przedsiębiorców</title>\r\n");
             htmlCodeSB.Append("</head>\r\n");
             htmlCodeSB.Append("<body>\r\n");
