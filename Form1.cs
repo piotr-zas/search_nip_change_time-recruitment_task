@@ -26,12 +26,33 @@ namespace search_nip_change_time_recruitment_task
             InitializeComponent();
         }
 
+
+        private void CheckSqlInfoIsTyped()
+        {
+            if (sqlServerTextbox.Text == "" || sqlDatabaseTextbox.Text == "" || sqlUserLoginTextbox.Text == "")
+            {
+                sqlConnectTestBtn.Enabled = false;
+                searchEmployerDataBtn.Enabled = false;
+            }
+            else
+            {
+                sqlConnectTestBtn.Enabled = true;
+                searchEmployerDataBtn.Enabled = true;
+            }
+
+        }
+
+
+
         private void sqlServerTextbox_TextChanged(object sender, EventArgs e)
         {
             //hide connection status and save settings
             sqlStateConnLabel.Visible = false;
             Properties.Settings.Default.sqlServerTextboxSetting = sqlServerTextbox.Text;
             Properties.Settings.Default.Save();
+
+            CheckSqlInfoIsTyped();
+
 
         }
 
@@ -41,6 +62,8 @@ namespace search_nip_change_time_recruitment_task
             sqlStateConnLabel.Visible = false;
             Properties.Settings.Default.sqlDatabaseTextboxSetting = sqlDatabaseTextbox.Text;
             Properties.Settings.Default.Save();
+
+            CheckSqlInfoIsTyped();
         }
 
         private void sqlUserLoginTextbox_TextChanged(object sender, EventArgs e)
@@ -49,6 +72,8 @@ namespace search_nip_change_time_recruitment_task
             sqlStateConnLabel.Visible = false;
             Properties.Settings.Default.sqlUserLoginTextboxSetting = sqlUserLoginTextbox.Text;
             Properties.Settings.Default.Save();
+
+            CheckSqlInfoIsTyped();
         }
 
         private void sqlUserPassTextbox_TextChanged(object sender, EventArgs e)
@@ -57,6 +82,7 @@ namespace search_nip_change_time_recruitment_task
             sqlStateConnLabel.Visible = false;
             Properties.Settings.Default.sqlUserPassTextboxSetting = sqlUserPassTextbox.Text;
             Properties.Settings.Default.Save();
+
         }
 
 
@@ -113,6 +139,8 @@ namespace search_nip_change_time_recruitment_task
             else startSrtChangeTimeBtn.Enabled = false;
 
 
+
+            CheckSqlInfoIsTyped();
 
         }
 

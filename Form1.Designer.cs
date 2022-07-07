@@ -31,6 +31,7 @@ namespace search_nip_change_time_recruitment_task
         {
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.searchEmployerDataBtn = new System.Windows.Forms.Button();
             this.employerNIPTextbox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -53,7 +54,6 @@ namespace search_nip_change_time_recruitment_task
             this.testConnectionBgw = new System.ComponentModel.BackgroundWorker();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.searchDataByNipBgw = new System.ComponentModel.BackgroundWorker();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.mainTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.sqlSettingsGroupBox.SuspendLayout();
@@ -88,9 +88,18 @@ namespace search_nip_change_time_recruitment_task
             this.tabPage1.Text = "Informacje o przedsiębiorcach";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(15, 762);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(1478, 23);
+            this.progressBar1.TabIndex = 13;
+            this.progressBar1.Visible = false;
+            // 
             // searchEmployerDataBtn
             // 
             this.searchEmployerDataBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.searchEmployerDataBtn.Enabled = false;
             this.searchEmployerDataBtn.Location = new System.Drawing.Point(394, 294);
             this.searchEmployerDataBtn.Name = "searchEmployerDataBtn";
             this.searchEmployerDataBtn.Size = new System.Drawing.Size(183, 43);
@@ -150,10 +159,11 @@ namespace search_nip_change_time_recruitment_task
             // 
             // sqlStateConnLabel
             // 
-            this.sqlStateConnLabel.AutoSize = true;
+            this.sqlStateConnLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.sqlStateConnLabel.Location = new System.Drawing.Point(784, 43);
             this.sqlStateConnLabel.Name = "sqlStateConnLabel";
-            this.sqlStateConnLabel.Size = new System.Drawing.Size(183, 25);
+            this.sqlStateConnLabel.Size = new System.Drawing.Size(688, 141);
             this.sqlStateConnLabel.TabIndex = 9;
             this.sqlStateConnLabel.Text = "Status połączenia";
             this.sqlStateConnLabel.Visible = false;
@@ -169,6 +179,7 @@ namespace search_nip_change_time_recruitment_task
             // 
             // sqlConnectTestBtn
             // 
+            this.sqlConnectTestBtn.Enabled = false;
             this.sqlConnectTestBtn.Location = new System.Drawing.Point(784, 187);
             this.sqlConnectTestBtn.Name = "sqlConnectTestBtn";
             this.sqlConnectTestBtn.Size = new System.Drawing.Size(183, 43);
@@ -301,14 +312,6 @@ namespace search_nip_change_time_recruitment_task
             this.searchDataByNipBgw.DoWork += new System.ComponentModel.DoWorkEventHandler(this.searchDataByNipBgw_DoWork);
             this.searchDataByNipBgw.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.searchDataByNipBgw_ProgressChanged);
             this.searchDataByNipBgw.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.searchDataByNipBgw_RunWorkerCompleted);
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(15, 762);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(1478, 23);
-            this.progressBar1.TabIndex = 13;
-            this.progressBar1.Visible = false;
             // 
             // Form1
             // 

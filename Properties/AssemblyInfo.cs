@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("search_nip_change_time-recruitment_task")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Recruitment task")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("search_nip_change_time-recruitment_task")]
-[assembly: AssemblyCopyright("Copyright ©  2022")]
+[assembly: AssemblyCopyright("Copyright © 2022 Piotr Zasieczny")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
