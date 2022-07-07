@@ -320,6 +320,7 @@ namespace search_nip_change_time_recruitment_task
             this.ClientSize = new System.Drawing.Size(1552, 886);
             this.Controls.Add(this.mainTabControl);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Zadanie rekrutacyjne";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.mainTabControl.ResumeLayout(false);
